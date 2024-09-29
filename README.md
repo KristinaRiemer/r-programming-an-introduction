@@ -16,7 +16,8 @@ To participate in this workshop you will need to have access to the programming 
 Accessing Rstudio on the cloud is an excellent alternative to installing it on your own computer. You will need to sign up for a free account on their website by following the instructions below. If you already have an accout with the RStudio Cloud, your credentials will still work on the Posit website.
 
 Website: [Posit Cloud](https://posit.cloud/)  
-- Click **Get Started** 
+- Click **Get Started**
+- Click **Learn more** under the *Cloud Free* option
 - Click **Sign Up**
 - Provide the necessary information or log in if you have an account with RStudio Cloud
 - Under *Your Workspace* on the left side, *Your Content* should be selected
