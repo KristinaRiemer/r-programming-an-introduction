@@ -4,13 +4,13 @@ University of South Florida
 Thursday October 3, 2024  
 10:00 - 11:00 am EST  
 
-R is a beginner friendly programming language used for statistical computing and graphics. In this workshop, you will be introduced to the basics of R and begin to explore data analysis. This workshop is one of two R programming lessons and it is recommended to continue on to [Data Analysis and Visualizations with R](https://github.com/sborrego/data-analysis-and-visualization-in-R). Attendees do not need to have any prior programming experience, we will start from the beginning!
+R is a beginner friendly programming language used for statistical computing and graphics. In this workshop, you will be introduced to the basics of R and begin to explore data analysis. This workshop is one of two R programming lessons. Attendees do not need to have any prior programming experience, we will start from the beginning!
 
 ***
 
 ## Install R and RStudio or get access on Posit (Formerly RStudio Cloud)
 
-To participate in this workshop you will need to have access to the programming language R and RStudio - see the options below. Please be prepared and have R and RStudio setup using either method before the workshop. If you experience any trouble with installation, please contact me prior to the workshop **staceyborrego@gmail.com**.
+To participate in this workshop you will need to have access to the programming language R and RStudio - see the options below. Please be prepared and have R and RStudio setup using either method before the workshop. If you experience any trouble with installation, please contact me prior to the workshop **kristina.p.riemer@gmail.com**.
 
 ### Option 1 - **recommended**
 
@@ -41,4 +41,4 @@ You are welcome to check out the lesson plan ahead of time.
 * The *.Rmd* file can be opened in RStudio
 * The *.html* file will open in your browser
 * The *.pdf* file will open using any PDF viewing software
-* Please let me know if you have any issues (staceyborrego@gmail.com). Happy scripting!
+* Please let me know if you have any issues (kristina.p.riemer@gmail.com). Happy coding!
