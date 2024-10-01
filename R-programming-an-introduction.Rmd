@@ -1,15 +1,17 @@
 ---
 title: "R Programming: An Introduction"
-author: "Stacey Borrego"
-date: "1/26/2024"
+author: "Stacey Borrego (edited by Kristina Riemer)"
 output:
+  html_document: default
   word_document: default
   pdf_document: 
       highlight: zenburn
-  html_document: default
 fontsize: 12pt
 urlcolor: blue
 linkcolor: red
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -18,34 +20,51 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Helpful Links
 
-* Data Carpentry: [Data Analysis and Visualization in R for Ecologists](https://datacarpentry.org/R-ecology-lesson/index.html)
-* [Tidyverse](https://tidyverse.org/): R packages for Data Science
-* [R for Data Science 2nd Edition](https://r4ds.hadley.nz/) by Hadley Wickham and Garret Grolemund
-* [Advanced R](http://adv-r.had.co.nz/) by Hadley Wickham
-* [ggplot2: Elegant graphics for data analysis](https://ggplot2-book.org/) by 
-Hadley Wickham
-* [Posit Cheatsheets](https://www.rstudio.com/resources/cheatsheets/) by Posit
-* [The R Gallery](https://bookdown.org/content/b298e479-b1ab-49fa-b83d-a57c2b034d49/) by Kyle W. Brown
-* [Introduction to R](https://intro2r.com/) by Douglas, Roos, Mancini, Cuoto, & Lusseau
+-   Data Carpentry: [Data Analysis and Visualization in R for
+    Ecologists](https://datacarpentry.org/R-ecology-lesson/index.html)
+-   [Tidyverse](https://tidyverse.org/): R packages for Data Science
+-   [R for Data Science 2nd Edition](https://r4ds.hadley.nz/) by Hadley
+    Wickham and Garret Grolemund
+-   [Advanced R](http://adv-r.had.co.nz/) by Hadley Wickham
+-   [ggplot2: Elegant graphics for data
+    analysis](https://ggplot2-book.org/) by Hadley Wickham
+-   [Posit Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
+    by Posit
+-   [The R
+    Gallery](https://bookdown.org/content/b298e479-b1ab-49fa-b83d-a57c2b034d49/)
+    by Kyle W. Brown
+-   [Introduction to R](https://intro2r.com/) by Douglas, Roos, Mancini,
+    Cuoto, & Lusseau
+
+## Overview of RStudio
+
+-   (Lower) left hand side: *console* which runs R code
+-   Create a new script
+    -   Hit file button in upper left hand corner
+    -   Select first option "R Script"
+-   Upper left hand side: *scripts* where R code can be saved
+-   Upper right hand side: where objects are
+-   Lower right hand side: files and folders on computer
 
 ## Simple math
 
-In the **CONSOLE** section of Rstudio, type in the following expressions.   
-Hit `ENTER` after each expression.
+In the *console*, type in the following expressions\
+Hit `ENTER` after each expression
 
 ```{r eval=FALSE}
 3 + 5
 12 / 7
 3 * 4
 8 ^ 2
-log(8)
 3 + 5 / 2
 (3 + 5) / 2
-``` 
+```
 
-## Creating objects in R  
+## Creating objects in R
 
 ### Working with variables/objects
+
+Do this in the *script* that was created
 
 Assign values to a variable/object
 
@@ -53,15 +72,24 @@ Assign values to a variable/object
 weight_kg <- 55
 ```
 
-* Assignment operator (<-)
-* Cannot start with numbers
-* Case sensitive
-* Avoid function names
-* Avoid dots (.)
-* Be consistent in the styling of your code
-     + [R Style Guide](https://google.github.io/styleguide/Rguide.html)
-     + Styles can include “lower_snake”, “UPPER_SNAKE”, “lowerCamelCase”, “UpperCamelCase”, etc
-     + We will use "lower_snake" for readibility during this workshop 
+### Running code in a script
+
+-   Select `Run` button at the top of the script window
+-   Select code or move cursor to the line to be run and type `Ctrl` +
+    `ENTER`
+
+**How to name variables:**
+
+-   Assignment operator (\<-)
+-   Cannot start with numbers
+-   Case sensitive
+-   Avoid function names
+-   Avoid dots (.)
+-   Be consistent in the styling of your code
+    -   [R Style Guide](https://google.github.io/styleguide/Rguide.html)
+    -   Styles can include “lower_snake”, “UPPER_SNAKE”,
+        “lowerCamelCase”, “UpperCamelCase”, etc
+    -   We will use "lower_snake" for readibility during this workshop
 
 Print the value of an object
 
@@ -93,28 +121,38 @@ weight_lb <- 2.2 * weight_kg
 weight_lb
 ```
 
+#### [Exercises]{.underline}
+
+1.  Create a variable for the length of a line and store the value 15.3
+2.  Multiply that object by 3 to get volume
+3.  Create a variable that stores that volume value
+
+```{r results='hide'}
+length <- 15.3
+length * 3
+volume <- length * 3
+```
+
+What is the value of volume?
+
+```{r}
+print(volume)
+```
+
 ### Saving code in a script
 
-* New script
-    + File > New File > R Script (`Ctrl` + `Shift` + `N`)  
-* Save the file
-    + File > Save (`Ctrl` + `S`)
+-   Save the file
+    -   File \> Save (`Ctrl` + `S`)
 
-### Running code in a script
-
-* Select `Run` button at the top of the script window
-* Select code or move cursor to the line to be run and type `Ctrl` + `ENTER`
-
-```{r eval=FALSE}
-2 + 2
-```
 \newpage
 
 ### Add comments in a script
 
-* The comment character in R is `#`. Anything to the right of a `#` in a script will be ignored.
-* Comment out a section by selecting and pressing `Ctrl` + `Shift` + `C`
-  + press the same keys again to remove the comment
+-   The comment character in R is `#`. Anything to the right of a `#` in
+    a script will be ignored.
+-   Comment out a section by selecting and pressing `Ctrl` + `Shift` +
+    `C`
+    -   press the same keys again to remove the comment
 
 ```{r eval=FALSE}
 # This is a comment.
@@ -124,10 +162,11 @@ weight_lb
 
 ### Functions and arguments
 
-* Functions are scripts that automate more commands
-* Functions are available in base R, by importing packages, or by making them yourself
-* Usually require one or more inputs called **arguments**
-* Functions typically return a **value**
+-   Functions are scripts that automate more commands
+-   Functions are available in base R, by importing packages, or by
+    making them yourself
+-   Usually require one or more inputs called **arguments**
+-   Functions typically return a **value**
 
 ```{r eval=FALSE}
 # This is a function call
@@ -135,8 +174,11 @@ sqrt(10)
 weight_kg <- sqrt(10)
 weight_kg
 ```
-* Information about functions can be found in the `Help` window by typing `?` and the function name. Example: `?round` 
-* You can also use the function `args()` to see the arguments of a function.
+
+-   Information about functions can be found in the `Help` window by
+    typing `?` and the function name. Example: `?round`
+-   You can also use the function `args()` to see the arguments of a
+    function.
 
 ```{r eval=FALSE}
 round(3.14159)
@@ -147,12 +189,26 @@ args(round)
 round(3.14159, digits = 2)
 ```
 
+#### [Exercises]{.underline}
+
+1. Get the absolute value of -253 (hint: look at at the `Help` page for the `sqrt` function)
+2. Take the logarithm of 10 (hint: the function name is the first three letters of the word)
+3. Take the logarithm of 10, but change the base to `exp(3)`
+
+```{r}
+abs(-253)
+log(10)
+log(10, base = exp(3))
+```
+
 ## Vectors and data types
 
-* A vector is composed by a series of values, which can be either numbers or characters.
-    + Quotes must surround characters.
-    + In a vector, all of the elements are the same type of data.
-* We can assign a series of values to a vector using the `c()` function.
+-   A vector is composed by a series of values, which can be either
+    numbers or characters.
+    -   Quotes must surround characters.
+    -   In a vector, all of the elements are the same type of data.
+-   We can assign a series of values to a vector using the `c()`
+    function.
 
 ```{r eval=FALSE}
 # Numerical vector
@@ -163,13 +219,15 @@ weight_g
 animals <- c("mouse", "rat", "dog")
 animals
 ```
+
 \newpage
 
 ### Explore the content of vector
 
-* `length()` tells you how many elements are in a particular vector
-* `class()` indicates what kind of object you are working with
-* `str()` provides an overview of the structure of an object and its elements.
+-   `length()` tells you how many elements are in a particular vector
+-   `class()` indicates what kind of object you are working with
+-   `str()` provides an overview of the structure of an object and its
+    elements.
 
 ```{r eval=FALSE}
 # Length
@@ -185,6 +243,17 @@ str(weight_g)
 str(animals)
 ```
 
+#### [Exercises]{.underline}
+
+1. Create a character vector of names of colors
+2. Put the vector elements into alphabetical order using the `sort` function
+
+```{r}
+colors <- c("red", "blue", "purple", "black")
+sort(colors)
+```
+
+
 ### Add elements to a vector
 
 ```{r eval=FALSE}
@@ -198,37 +267,46 @@ weight_g <- c(30, weight_g)
 weight_g
 ```
 
-### Data Types  
-An atomic vector is the simplest R data type and is a linear vector of a single type.
+#### [Exercises]{.underline}
 
-There are four common types of atomic vectors: character, numeric or double, logical, and integer. There are two rare types that will not be discussed: complex and raw.
+1. Add another color to your colors vector
+2. Put the vector into reverse alphabetical order (hint: use `?`)
 
-* `character`
-* `numeric` or `double`
-* `logical` for TRUE and FALSE (the boolean data type)
-* `integer` for integer numbers (e.g., 2L, the L indicates to R that it’s an integer)  
-* `complex` to represent complex numbers with real and imaginary parts (e.g., 1 + 4i)
-* `raw` for bitstreams
+```{r}
+colors <- c(colors, "magenta")
+sort(colors, decreasing = TRUE)
+```
+
+
+### Data Types
+
+An atomic vector is the simplest R data type and is a linear vector of a
+single type.
+
+There are four common types of atomic vectors: character, numeric or
+double, logical, and integer. There are two rare types that will not be
+discussed: complex and raw.
+
+-   `character`
+-   `numeric` or `double`
+-   `logical` for TRUE and FALSE (the boolean data type)
+-   `integer` for integer numbers (e.g., 2L, the L indicates to R that
+    it’s an integer)\
+-   `complex` to represent complex numbers with real and imaginary parts
+    (e.g., 1 + 4i)
+-   `raw` for bitstreams
 
 ```{r eval=FALSE}
 typeof(weight_g)
 typeof(animals)
 ```
 
-### Data Structures
+### Coercion
 
-Vectors are one of the many data structures that R uses. 
-
-* lists (`list`)
-* matrices (`matrix`)
-* data frames (`data.frame`)
-* factors (`factor`)
-* arrays (`array`)
-
-
-### Coercion 
-
-All elements of an atomic vector must be the same type, so when you attempt to combine different types they will be coerced to the most flexible type. Types from least to most flexible are: logical, integer, double, and character.
+All elements of an atomic vector must be the same type, so when you
+attempt to combine different types they will be coerced to the most
+flexible type. Types from least to most flexible are: logical, integer,
+double, and character.
 
 ```{r eval=FALSE}
 num_char <- c(1, 2, 3, "a")
@@ -248,9 +326,22 @@ typeof(tricky)
 str(tricky)
 ```
 
-## Conditional subsetting 
+#### [Exercises]{.underline}
 
-To extract one or several values from a vector, provide one or several indices in square brackets.
+1. Create a logical vector with any number and order of `TRUE` and `FALSE`
+2. Add a numeric value to this vector
+3. What kind of vector will this be? 
+
+```{r}
+some_booleans <- c(TRUE, FALSE, FALSE, FALSE)
+some_booleans <- c(3, some_booleans)
+typeof(some_booleans)
+```
+
+## Conditional subsetting
+
+To extract one or several values from a vector, provide one or several
+indices in square brackets.
 
 ```{r eval=FALSE}
 animals <- c("mouse", "rat", "dog", "cat")
@@ -266,7 +357,8 @@ more_animals
 
 ```
 
-Subset by using a logical vector. TRUE will select the element with the same index, while FALSE will not.
+Subset by using a logical vector. TRUE will select the element with the
+same index, while FALSE will not.
 
 ```{r eval=FALSE}
 
@@ -279,15 +371,16 @@ weight_g > 50
 weight_g[weight_g > 50]
 ```
 
-Combine multiple tests using `&` (both conditions are true, **AND**) or 
+Combine multiple tests using `&` (both conditions are true, **AND**) or
 `|` (at least one of the conditions is true, **OR**).
 
 Helpful operators
 
-* `>` greater than 
-* `<` less than 
-* `<=` less than or equal to 
-* `==` equal to, test for numerical equality between the left and right hand sides
+-   `>` greater than
+-   `<` less than
+-   `<=` less than or equal to
+-   `==` equal to, test for numerical equality between the left and
+    right hand sides
 
 ```{r eval=FALSE}
 weight_g
@@ -317,12 +410,13 @@ animals[animals %in% c("rat", "cat", "duck", "fish")]
 
 ## Missing data
 
-* Missing data are represented in vectors as NA.
-* You can add the argument `na.rm = TRUE` to calculate the result as if the missing values were removed (rm stands for **r**e**m**ove)
-* `is.na()` identifies missing elements
-* `na.omit()` returns the object with incomplete cases removed 
-* `complete.cases()` returns a logical vector indicating which cases are complete
-
+-   Missing data are represented in vectors as NA.
+-   You can add the argument `na.rm = TRUE` to calculate the result as
+    if the missing values were removed (rm stands for **r**e**m**ove)
+-   `is.na()` identifies missing elements
+-   `na.omit()` returns the object with incomplete cases removed
+-   `complete.cases()` returns a logical vector indicating which cases
+    are complete
 
 ```{r eval=FALSE}
 heights <- c(1, 2, 3, NA, 5, NA)
@@ -360,15 +454,31 @@ mean(na.omit(heights))
 complete.cases(heights)
 heights[complete.cases(heights)]
 ```
+
 \newpage
+
+### Data Structures
+
+Vectors are one of the many data structures that R uses.
+
+-   lists (`list`)
+-   matrices (`matrix`)
+-   data frames (`data.frame`)
+-   factors (`factor`)
+-   arrays (`array`)
 
 ## Data Frames
 
-When we load data into R, it may be stored as an object of class data frame.
+When we load data into R, it may be stored as an object of class data
+frame.
 
-A data frame is the representation of data in the format of a table where the columns are vectors that all have the same length. Because columns are vectors, each column must contain a single type of data (e.g., characters, integers, factors, logical values). 
+A data frame is the representation of data in the format of a table
+where the columns are vectors that all have the same length. Because
+columns are vectors, each column must contain a single type of data
+(e.g., characters, integers, factors, logical values).
 
-For example, here is an example data frame comprising a numeric, character, and logical vector.
+For example, here is an example data frame comprising a numeric,
+character, and logical vector.
 
 ```{r eval=TRUE, echo=TRUE}
 df <- data.frame(numeric = c(1, 3, 5, 7, 9, 11),
@@ -376,9 +486,14 @@ df <- data.frame(numeric = c(1, 3, 5, 7, 9, 11),
                  logical = c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE))
 df
 ```
-Data frames can also be subset using square brackets as demonstrated with the single vectors or using `$` to specifically name a column.
 
-Using single square brackets will return a data frame containing the values of the vector, whereas using double square brackets or `$` will return a simplified vector of the type of class as the values contained with in it.
+Data frames can also be subset using square brackets as demonstrated
+with the single vectors or using `$` to specifically name a column.
+
+Using single square brackets will return a data frame containing the
+values of the vector, whereas using double square brackets or `$` will
+return a simplified vector of the type of class as the values contained
+with in it.
 
 ```{r}
 # Column 1 data frame
@@ -389,7 +504,9 @@ df[[1]]
 df$numeric
 ```
 
-Data can be further subset by providing the indices for the rows and columns you want. The notation is to first name the data frame followed by single square brackets listing the rows and columns.
+Data can be further subset by providing the indices for the rows and
+columns you want. The notation is to first name the data frame followed
+by single square brackets listing the rows and columns.
 
 ```{r}
 # Column 2
@@ -410,9 +527,13 @@ df[c(1, 5, 4), 1:2]
 # Rows 1, 5, and 4 in columns 1 and 3
 df[c(1, 5, 4), c(1:3)]
 ```
+
 \newpage
 
-The subset data frame can be further subset using single square brackets and the specific names of the columns. [HERE](https://r-coder.com/subset-r/) is a pretty thorough article on subsetting.
+The subset data frame can be further subset using single square brackets
+and the specific names of the columns.
+[HERE](https://r-coder.com/subset-r/) is a pretty thorough article on
+subsetting.
 
 ```{r eval=TRUE}
 df["character"]
@@ -425,7 +546,7 @@ df[c(1, 5, 6), c("numeric", "character")]
 
 ![Understanding the Iris Dataset](./flowers.png)
 
-## Starting with Data  
+## Starting with Data
 
 This is what the data will look like:
 
@@ -441,7 +562,6 @@ tabl <- "
 "
 cat(tabl)
 ```
-
 
 ```{r}
 # To see data sets available
@@ -476,23 +596,29 @@ head(iris, n = 10)
 tail(iris, n = 10)
 ```
 
-* Size:
-    + `dim(iris)` - returns a vector with the number of rows in the first element, and the number of columns as the second element (the dimensions of the object)
-    + `nrow(iris)` - returns the number of rows
-    + `ncol(iris)` - returns the number of columns
-* Content:
-    + `head(iris)` - shows the first 6 rows
-    + `tail(iris)` - shows the last 6 rows
-* Names:
-    + `names(iris)` - returns the column names (synonym of colnames() for data.frame objects)
-    + `rownames(iris)` - returns the row names
-* Summary:
-    + `str(iris)` - structure of the object and information about the class, length and content of each column
-    + `summary(iris)` - summary statistics for each column
+-   Size:
+    -   `dim(iris)` - returns a vector with the number of rows in the
+        first element, and the number of columns as the second element
+        (the dimensions of the object)
+    -   `nrow(iris)` - returns the number of rows
+    -   `ncol(iris)` - returns the number of columns
+-   Content:
+    -   `head(iris)` - shows the first 6 rows
+    -   `tail(iris)` - shows the last 6 rows
+-   Names:
+    -   `names(iris)` - returns the column names (synonym of colnames()
+        for data.frame objects)
+    -   `rownames(iris)` - returns the row names
+-   Summary:
+    -   `str(iris)` - structure of the object and information about the
+        class, length and content of each column
+    -   `summary(iris)` - summary statistics for each column
 
 ### Indexing and subsetting data frames
 
-A data frame has rows and columns in 2 dimensions. To extract specific data, specify the “coordinates” in `[ ]` indicating row numbers first followed by column numbers. 
+A data frame has rows and columns in 2 dimensions. To extract specific
+data, specify the “coordinates” in `[ ]` indicating row numbers first
+followed by column numbers.
 
 ```{r eval=FALSE}
 # dim() gives the output of the rows and columns of the object
@@ -561,16 +687,23 @@ iris[-(7:nrow(iris)), ]
 
 Helpful links:
 
-* [Installation](https://ggplot2.tidyverse.org/) 
-* [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/getting-started.html#basic-use)
+-   [Installation](https://ggplot2.tidyverse.org/)
+-   [ggplot2: Elegant Graphics for Data
+    Analysis](https://ggplot2-book.org/getting-started.html#basic-use)
 
-Plotting can be done in many different ways in R. Base R has several basic plotting functions which can be valuable for a quick peek at your data. However, a common and customizable option is to use the package `ggplot2`. 
+Plotting can be done in many different ways in R. Base R has several
+basic plotting functions which can be valuable for a quick peek at your
+data. However, a common and customizable option is to use the package
+`ggplot2`.
 
 Every ggplot2 plot has three key components:
 
-* **Data** (`data`)
-* A set of **aesthetic mappings** between variables in the data and visual properties (`aes(x, y)`)
-* At least one **layer** which describes how to render each observation. Layers are usually created with a geom function. It is important to note that layers are added with a `+`.
+-   **Data** (`data`)
+-   A set of **aesthetic mappings** between variables in the data and
+    visual properties (`aes(x, y)`)
+-   At least one **layer** which describes how to render each
+    observation. Layers are usually created with a geom function. It is
+    important to note that layers are added with a `+`.
 
 ```{r, fig.width =5, fig.height = 3, fig.align='center'}
 # Install the following library
@@ -617,7 +750,6 @@ plot_1 +
        title = "Sepal Length and Width")
 ```
 
-
 ```{r, fig.width = 5, fig.height = 3, fig.align='center'}
 # Boxplot
 plot_2 <- ggplot(data = iris, 
@@ -644,26 +776,33 @@ plot_2 +
        title = "Petal Width of Iris Species") +
   theme_bw()
 ```
+
 \newpage
 
-R comes with default colors and so does ggplot2. These are nice enough but sometimes
-it is nice to customize our plots. There are few ways we can do this.
+R comes with default colors and so does ggplot2. These are nice enough
+but sometimes it is nice to customize our plots. There are few ways we
+can do this.
 
-* [RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html): Such a
-helpful tool - contains color palettes and can make a range of colors of your choice. 
-Must be installed and loaded prior to use:
-  - `install.packages("Rcolorbrewer")`
-  - `library(Rcolorbrewer)`
-  
-* [viridisLite](https://ggplot2.tidyverse.org/reference/scale_viridis.html): This is part
-of ggplot2 that provides color palettes. This does not need to be installed and loaded as it comes with ggplot2. 
-  - Another resource
+-   [RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html):
+    Such a helpful tool - contains color palettes and can make a range
+    of colors of your choice. Must be installed and loaded prior to use:
 
-* [Colors in R](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf): A list of 
-all the color names available in R
+    -   `install.packages("Rcolorbrewer")`
+    -   `library(Rcolorbrewer)`
 
-* You can also provide hexidecimal values. [HERE](https://www.w3schools.com/colors/colors_picker.asp?color=00bfff) is a helpful tool.
+-   [viridisLite](https://ggplot2.tidyverse.org/reference/scale_viridis.html):
+    This is part of ggplot2 that provides color palettes. This does not
+    need to be installed and loaded as it comes with ggplot2.
 
+    -   Another resource
+
+-   [Colors in
+    R](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf): A list of
+    all the color names available in R
+
+-   You can also provide hexidecimal values.
+    [HERE](https://www.w3schools.com/colors/colors_picker.asp?color=00bfff)
+    is a helpful tool.
 
 ```{r, fig.width = 5, fig.height = 3, fig.align='center', warning = FALSE}
 
@@ -730,13 +869,22 @@ plot_3 +
 
 ## Factors
 
-This can be the cause of many issues when plotting data. Always check if the data
- is factored and determined whether is should or should not be to get the correct plot.
+This can be the cause of many issues when plotting data. Always check if
+the data is factored and determined whether is should or should not be
+to get the correct plot.
 
-R has a special class for working with categorical data, called factors. 
-Once created, factors can only contain a pre-defined set of values, known as levels. Factors are stored as integers associated with labels and they can be ordered or unordered. While factors look (and often behave) like character vectors, they are actually treated as integer vectors by R. So you need to be very careful when treating them as strings.
+R has a special class for working with categorical data, called factors.
+Once created, factors can only contain a pre-defined set of values,
+known as levels. Factors are stored as integers associated with labels
+and they can be ordered or unordered. While factors look (and often
+behave) like character vectors, they are actually treated as integer
+vectors by R. So you need to be very careful when treating them as
+strings.
 
-When working with data in a data frame, the columns that contain text are not automatically coerced (= converted) into the factor data type, but once we have loaded the data we can do the conversion using the factor() function
+When working with data in a data frame, the columns that contain text
+are not automatically coerced (= converted) into the factor data type,
+but once we have loaded the data we can do the conversion using the
+factor() function
 
 ```{r eval=FALSE}
 head(iris)
@@ -748,10 +896,10 @@ levels(iris$Species)
 nlevels(iris$Species)
 ```
 
-By default, R always sorts levels in alphabetical order.
-In the example below, R will assign 1 to the level "experimental" and 2 
-to the level "wild type" (because "e" comes before "w", even though the first
-element in this vector is "wild type"). 
+By default, R always sorts levels in alphabetical order. In the example
+below, R will assign 1 to the level "experimental" and 2 to the level
+"wild type" (because "e" comes before "w", even though the first element
+in this vector is "wild type").
 
 ```{r eval=FALSE}
 sample <- factor(c("wild type", "experimental", "wild type", "experimental"))
@@ -790,7 +938,6 @@ sample_char
 as.numeric(sample)
 ```
 
-
 ```{r eval=FALSE}
 year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
 levels(year_fct)
@@ -804,9 +951,11 @@ as.numeric(levels(year_fct))[year_fct]
 
 Notice that in the `levels()` approach, three important steps occur:
 
-* Obtain all the factor levels using `levels(year_fct)`
-* Convert these levels to numeric values using `as.numeric(levels(year_fct))`
-* Access these numeric values using the underlying integers of the vector `year_fct` inside the square brackets
+-   Obtain all the factor levels using `levels(year_fct)`
+-   Convert these levels to numeric values using
+    `as.numeric(levels(year_fct))`
+-   Access these numeric values using the underlying integers of the
+    vector `year_fct` inside the square brackets
 
 ### Renaming Factors
 
@@ -822,30 +971,39 @@ levels(iris$Species)
 iris$Species
 
 ```
+
 \newpage
 
 # Manipulating, analyzing and exporting data with tidyverse
 
-## Data manipulation using dplyr and tidyr  
+## Data manipulation using dplyr and tidyr
 
-[dplyr](https://dplyr.tidyverse.org/) is a package for helping with tabular data manipulation. It pairs nicely with [tidyr](https://tidyr.tidyverse.org/) which enables you to convert between different data formats for plotting and analysis.
+[dplyr](https://dplyr.tidyverse.org/) is a package for helping with
+tabular data manipulation. It pairs nicely with
+[tidyr](https://tidyr.tidyverse.org/) which enables you to convert
+between different data formats for plotting and analysis.
 
-The [tidyverse](https://www.tidyverse.org/) package is an “umbrella-package” that installs tidyr, dplyr, and several other useful packages for data analysis, such as ggplot2, tibble, etc.
+The [tidyverse](https://www.tidyverse.org/) package is an
+“umbrella-package” that installs tidyr, dplyr, and several other useful
+packages for data analysis, such as ggplot2, tibble, etc.
 
 dplyr functions
 
-* `select()` subset columns
-* `filter()` subset rows on conditions
-* `mutate()` create new columns by using information from other columns
-* `group_by()` and `summarize()` create summary statistics on grouped data
-* `arrange()` sort results
-* `count()` count discrete values
+-   `select()` subset columns
+-   `filter()` subset rows on conditions
+-   `mutate()` create new columns by using information from other
+    columns
+-   `group_by()` and `summarize()` create summary statistics on grouped
+    data
+-   `arrange()` sort results
+-   `count()` count discrete values
 
 ### Selecting columns and filtering rows
 
-* `select()` subset columns
-    + The first argument is the data frame (iris), and the subsequent arguments are the columns to keep.
-* `filter()` subset rows on conditions
+-   `select()` subset columns
+    -   The first argument is the data frame (iris), and the subsequent
+        arguments are the columns to keep.
+-   `filter()` subset rows on conditions
 
 ```{r eval=TRUE}
 # Install Tidyverse
@@ -866,7 +1024,8 @@ select(iris,
 
 \newpage
 
-Select all columns except certain ones by using a “-” in front of the variable to exclude it
+Select all columns except certain ones by using a “-” in front of the
+variable to exclude it
 
 ```{r eval=FALSE}
 select(iris, 
@@ -881,9 +1040,15 @@ filter(iris, Species == "virginica")
 
 ### Pipes
 
-What if you want to select and filter at the same time? There are three ways to do this: use intermediate steps, nested functions, or pipes.
+What if you want to select and filter at the same time? There are three
+ways to do this: use intermediate steps, nested functions, or pipes.
 
-Pipes let you take the output of one function and send it directly to the next, which is useful when you need to do many things to the same data set. Pipes in R look like `%>%` and are made available via the magrittr package, installed automatically with dplyr. If you use RStudio, you can type the pipe with `Ctrl` + `Shift` + `M` if you have a PC or `Cmd` + `Shift` + `M` if you have a Mac.
+Pipes let you take the output of one function and send it directly to
+the next, which is useful when you need to do many things to the same
+data set. Pipes in R look like `%>%` and are made available via the
+magrittr package, installed automatically with dplyr. If you use
+RStudio, you can type the pipe with `Ctrl` + `Shift` + `M` if you have a
+PC or `Cmd` + `Shift` + `M` if you have a Mac.
 
 ```{r eval=FALSE}
 # Filter rows and save as an object
@@ -939,7 +1104,8 @@ iris %>%
 
 ### Mutate
 
-Create new columns based on the values in existing columns using `mutate()`
+Create new columns based on the values in existing columns using
+`mutate()`
 
 ```{r eval=FALSE}
 iris %>%
@@ -963,7 +1129,9 @@ iris %>%
   theme_classic()
 ```
 
-Pretend the first few rows of the output contain NAs. To remove those we can insert a filter() in the chain of functions combined with `is.na()` to identify all NAs and the `!` operator to negate the result
+Pretend the first few rows of the output contain NAs. To remove those we
+can insert a filter() in the chain of functions combined with `is.na()`
+to identify all NAs and the `!` operator to negate the result
 
 ```{r eval=FALSE}
 iris %>%
@@ -974,13 +1142,16 @@ iris %>%
 
 ### Split-apply-combine data analysis and the `summarize()` function
 
-Many data analysis tasks can be approached using the **split-apply-combine paradigm** 
+Many data analysis tasks can be approached using the
+**split-apply-combine paradigm**
 
-* Split the data into groups
-* Apply some analysis to each group
-* Combine the results
+-   Split the data into groups
+-   Apply some analysis to each group
+-   Combine the results
 
-Key functions of dplyr for this workflow are `group_by()` and `summarize()`.  `group_by()` is often used together with `summarize()`, which collapses each group into a single-row summary of that group. 
+Key functions of dplyr for this workflow are `group_by()` and
+`summarize()`. `group_by()` is often used together with `summarize()`,
+which collapses each group into a single-row summary of that group.
 
 ```{r eval=FALSE}
 iris %>%
@@ -988,7 +1159,9 @@ iris %>%
   summarize(petal_width_mean = mean(Petal.Width, na.rm = TRUE))
 ```
 
-Once the data are grouped, you can also summarize multiple variables at the same time. Add a column indicating the minimum and maximum width for each species.
+Once the data are grouped, you can also summarize multiple variables at
+the same time. Add a column indicating the minimum and maximum width for
+each species.
 
 ```{r eval=FALSE}
 iris %>%
@@ -1001,7 +1174,8 @@ iris %>%
 
 ### Exporting plots
 
-`ggsave()` allows you easily change the dimension and resolution of your plot by adjusting the appropriate arguments (width, height, and dpi)
+`ggsave()` allows you easily change the dimension and resolution of your
+plot by adjusting the appropriate arguments (width, height, and dpi)
 
 ```{r eval=FALSE}
 my_plot <- ggplot(data = iris,
@@ -1022,48 +1196,64 @@ my_plot <- ggplot(data = iris,
 ggsave("path/name_of_file.png", my_plot, width = 15, height = 10)
 
 ```
+
 ### Importing Data
 
-It is fun to practice our R skills and try out new methods with the built-in
-R data sets. However, we need the option to load read data into R! This can 
-be done using a few different options depending on the delimiter of your original file. 
+It is fun to practice our R skills and try out new methods with the
+built-in R data sets. However, we need the option to load read data into
+R! This can be done using a few different options depending on the
+delimiter of your original file.
 
-I'll refer you to section of [IMPORTING DATA](https://intro2r.com/importing-data.html) from this lovely online resource **Introduction to R**. It even has videos!
-
+I'll refer you to section of [IMPORTING
+DATA](https://intro2r.com/importing-data.html) from this lovely online
+resource **Introduction to R**. It even has videos!
 
 # Review
 
 ## Objects
 
-* Variables: placeholders for assigned values and objects.
-* Vectors: contain a single type of value (character, numeric, logical, or integer)
-* Data frames: are multiple vectors of the same length, each vector can contain a different data type.
+-   Variables: placeholders for assigned values and objects.
+-   Vectors: contain a single type of value (character, numeric,
+    logical, or integer)
+-   Data frames: are multiple vectors of the same length, each vector
+    can contain a different data type.
 
 ## Subsetting
 
-* Subsetting: extracts values from a vector or larger objects
-  - Brackets indicate the values to be subset
-  - Logical vectors determine the values to be selected
-  - Conditional operators: select values based on criterion provided
-    + or (`|`), and (`&`)
-    + less than (`<`, `<=`), greater than (`>`, `>=`), equal to (`==`)
-    
+-   Subsetting: extracts values from a vector or larger objects
+    -   Brackets indicate the values to be subset
+    -   Logical vectors determine the values to be selected
+    -   Conditional operators: select values based on criterion provided
+        -   or (`|`), and (`&`)
+        -   less than (`<`, `<=`), greater than (`>`, `>=`), equal to
+            (`==`)
+
 ## Data
 
-* The most common object you'll see are data frames, which are a collection of vectors of the same length.
-* Missing data: missing data can cause issues with some functions but can be easily circumvented using the argument `na.rm = TRUE`, making a logical vector with `is.na()` or `!is.na()`, or using the functions `na.omit()` or `complete.cases()`
-* Data sets are available in R for you to use, simply choose one from a list `data()`
+-   The most common object you'll see are data frames, which are a
+    collection of vectors of the same length.
+-   Missing data: missing data can cause issues with some functions but
+    can be easily circumvented using the argument `na.rm = TRUE`, making
+    a logical vector with `is.na()` or `!is.na()`, or using the
+    functions `na.omit()` or `complete.cases()`
+-   Data sets are available in R for you to use, simply choose one from
+    a list `data()`
 
 ## Tidyverse
 
-* It is common to use tools and packages available in the Tidyverse collection for data analysis and visualization.
-* `Ggplot2`: this package is for data visualization. It requires a ggplot for the base plot which contains the data, then layers can be added to generate a personalized plot.
-* Factors are critical for generating the correct plot (`levels()`)
-* `Dplyr`: is helpful for data frame manipulation.
-  - `%>%` is used as a pipe, which sends the result from one process to the next. Results from data manipulation can be sent directly to make a ggplot and layers can be added from there.
-  - `select()` selects columns
-  - `filter()` filters rows based on conditions provided
-* Save
-  - Save your script in a `.R` plain text file to save your code
-  - Save your data in CSV format using `write.csv()`
-  - `ggsave` save your images to any type of file
+-   It is common to use tools and packages available in the Tidyverse
+    collection for data analysis and visualization.
+-   `Ggplot2`: this package is for data visualization. It requires a
+    ggplot for the base plot which contains the data, then layers can be
+    added to generate a personalized plot.
+-   Factors are critical for generating the correct plot (`levels()`)
+-   `Dplyr`: is helpful for data frame manipulation.
+    -   `%>%` is used as a pipe, which sends the result from one process
+        to the next. Results from data manipulation can be sent directly
+        to make a ggplot and layers can be added from there.
+    -   `select()` selects columns
+    -   `filter()` filters rows based on conditions provided
+-   Save
+    -   Save your script in a `.R` plain text file to save your code
+    -   Save your data in CSV format using `write.csv()`
+    -   `ggsave` save your images to any type of file
