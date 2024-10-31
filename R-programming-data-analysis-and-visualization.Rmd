@@ -2,10 +2,10 @@
 title: "R Programming: Data Analysis & Visualization"
 author: "Stacey Borrego (edited by Kristina Riemer)"
 output:
-  html_document: default
-  word_document: default
   pdf_document: 
       highlight: zenburn
+  word_document: default
+  html_document: default
 fontsize: 12pt
 urlcolor: blue
 linkcolor: red
@@ -75,7 +75,7 @@ class(iris)
 View(iris)
 ```
 
-\newpage
+
 
 Inspect the data
 
@@ -174,7 +174,7 @@ iris[, -c(1, 2)]
 iris[-(7:nrow(iris)), ] 
 ```
 
-\newpage
+
 
 ## Plotting
 
@@ -230,7 +230,7 @@ plot_1 +
                  shape = Species))
 ```
 
-\newpage
+
 
 ```{r, fig.width = 5, fig.height = 3, fig.align='center'}
 
@@ -257,20 +257,14 @@ plot_2 +
   
 # Colorful boxplot adding more layers and aesthetic mappings to the data
 plot_2 + 
-  geom_boxplot(aes(color = Species), 
-               outlier.colour = NA, 
-               position = "dodge") +
-  geom_jitter(aes(color = Species, 
-                  x = Species), 
-              position = position_jitter(width = .05), 
-              alpha = 0.5) +
-  labs(x = "Species", 
-       y = "Petal Width",
-       title = "Petal Width of Iris Species") +
+  geom_boxplot(aes(color = Species)) +
+  geom_jitter(aes(x = Species), 
+              position = position_jitter(width = 0.05)) + 
+  labs(y = "Petal Width") +
   theme_bw()
 ```
 
-\newpage
+
 
 R comes with default colors and so does ggplot2. These are nice enough
 but sometimes it is nice to customize our plots. There are few ways we
@@ -314,7 +308,7 @@ plot_3 +
   
 ```
 
-\newpage
+
 
 ```{r, fig.width = 5, fig.height = 3, fig.align='center', warning = FALSE}
 # RColorBrewer Examples
@@ -326,29 +320,6 @@ plot_3 +
   geom_point(size = 2) +
   scale_color_brewer(palette = "PuOr")
 
-# RColorBrewer Example 2
-plot_3 + 
-  geom_point(size = 2) +
-  scale_color_brewer(palette = "Blues")
-
-# viridisLite Example 1
-# To be used with discrete data (non-continous)
-# Uses default color option
-plot_3 +
-  geom_point(size = 2) +
-  scale_colour_viridis_d()
-
-# viridisLite Example 2
-# To be used with discrete data (non-continous)
-# C
-plot_3 +
-  geom_point(size = 2) +
-  scale_colour_viridis_d(option = "plasma")
-
-# Using Your Own Colors, Example 1
-plot_3 +
-  geom_point(size = 2) +
-  scale_color_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF")) 
 
 # Using Your Own Colors, Example 2
 plot_3 +
@@ -358,7 +329,7 @@ plot_3 +
 
 ```
 
-\newpage
+
 
 ## Factors
 
@@ -373,21 +344,6 @@ and they can be ordered or unordered. While factors look (and often
 behave) like character vectors, they are actually treated as integer
 vectors by R. So you need to be very careful when treating them as
 strings.
-
-When working with data in a data frame, the columns that contain text
-are not automatically coerced (= converted) into the factor data type,
-but once we have loaded the data we can do the conversion using the
-factor() function
-
-```{r eval=FALSE}
-head(iris)
-iris$Species <- factor(iris$Species)
-head(iris)
-
-summary(iris$Species)
-levels(iris$Species)
-nlevels(iris$Species)
-```
 
 By default, R always sorts levels in alphabetical order. In the example
 below, R will assign 1 to the level "experimental" and 2 to the level
@@ -414,7 +370,21 @@ levels(sample)
 nlevels(sample)
 ```
 
-\newpage
+When working with data in a data frame, the columns that contain text
+are not automatically coerced (= converted) into the factor data type,
+but once we have loaded the data we can do the conversion using the
+factor() function
+
+```{r eval=FALSE}
+head(iris)
+iris$Species <- factor(iris$Species)
+head(iris)
+
+summary(iris$Species)
+levels(iris$Species)
+nlevels(iris$Species)
+```
+
 
 ### Converting Factors
 
@@ -431,24 +401,6 @@ sample_char
 as.numeric(sample)
 ```
 
-```{r eval=FALSE}
-year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
-levels(year_fct)
-
-as.numeric(year_fct)    
-as.character(year_fct)
-
-as.numeric(as.character(year_fct))
-as.numeric(levels(year_fct))[year_fct] 
-```
-
-Notice that in the `levels()` approach, three important steps occur:
-
--   Obtain all the factor levels using `levels(year_fct)`
--   Convert these levels to numeric values using
-    `as.numeric(levels(year_fct))`
--   Access these numeric values using the underlying integers of the
-    vector `year_fct` inside the square brackets
 
 ### Renaming Factors
 
@@ -457,15 +409,19 @@ Notice that in the `levels()` approach, three important steps occur:
 levels(iris$Species)
 
 # Replace level names with a new vector of names
-levels(iris$Species) <- c("Set", "Ver", "Virg")
-levels(iris$Species)
+levels(iris$Species) <- c("Setosa", "Versicolor", "Virginica")
+ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species, shape = Species)) + 
+  geom_point() + 
+  labs(x = "Sepal Length", y = "Sepal Width", title = "Sepal Length & Width") + 
+  #scale_color_brewer(palette = "PuOr")
+  scale_color_manual(values = c("orange", "red", "blue"))
 
 # Check names of factors have been replaced within data frame
-iris$Species
+levels(iris$Species)
 
 ```
 
-\newpage
+
 
 # Manipulating, analyzing and exporting data with tidyverse
 
@@ -515,7 +471,7 @@ select(iris,
        Species, Petal.Length, Petal.Width)
 ```
 
-\newpage
+
 
 Select all columns except certain ones by using a “-” in front of the
 variable to exclude it
@@ -593,7 +549,7 @@ iris %>%
   labs(title = "Iris Small Petal Lengths")
 ```
 
-\newpage
+
 
 ### Mutate
 
@@ -614,23 +570,7 @@ iris %>%
          petal_percent = petal_ratio * 100) %>%
   ggplot(aes(x = Species,
              y = petal_ratio)) +
-  geom_boxplot(aes(color = Species)) +
-  geom_point(aes(color = Species)) +
-  labs(x = "Species",
-       y = "Petal Width / Length",
-       title = "Petal Ratios") +
-  theme_classic()
-```
-
-Pretend the first few rows of the output contain NAs. To remove those we
-can insert a filter() in the chain of functions combined with `is.na()`
-to identify all NAs and the `!` operator to negate the result
-
-```{r eval=FALSE}
-iris %>%
-  filter(!is.na(Petal.Length)) %>%
-  mutate(petal_ratio = Petal.Width / Petal.Length) %>%
-  tail()
+  geom_boxplot()
 ```
 
 ### Split-apply-combine data analysis and the `summarize()` function
@@ -661,8 +601,7 @@ iris %>%
   filter(!is.na(Petal.Width)) %>%
   group_by(Species) %>%
   summarize(petal_width_mean = mean(Petal.Width),
-            petal_width_min = min(Petal.Width),
-            petal_width_max = max(Petal.Width))
+            petal_width_min = min(Petal.Width))
 ```
 
 ### Exporting plots
@@ -671,82 +610,9 @@ iris %>%
 plot by adjusting the appropriate arguments (width, height, and dpi)
 
 ```{r eval=FALSE}
-my_plot <- ggplot(data = iris,
-                  aes(x = Sepal.Length, 
-                      y = Sepal.Width, 
-                      color = Species)) +
-    geom_point() +
-    facet_wrap(vars(Species)) +
-    labs(title = "Petal width by species",
-         x = "Sepal Length",
-         y = "Sepal Width") +
-    theme_bw() +
-    theme(axis.text.x = element_text(colour = "grey20", size = 12, angle = 90,
-                                     hjust = 0.5, vjust = 0.5),
-          axis.text.y = element_text(colour = "grey20", size = 12),
-          text = element_text(size = 16))
+my_plot <- ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point()
 
 ggsave("path/name_of_file.png", my_plot, width = 15, height = 10)
 
 ```
-
-### Importing Data
-
-It is fun to practice our R skills and try out new methods with the
-built-in R data sets. However, we need the option to load read data into
-R! This can be done using a few different options depending on the
-delimiter of your original file.
-
-I'll refer you to section of [IMPORTING
-DATA](https://intro2r.com/importing-data.html) from this lovely online
-resource **Introduction to R**. It even has videos!
-
-# Review
-
-## Objects
-
--   Variables: placeholders for assigned values and objects.
--   Vectors: contain a single type of value (character, numeric,
-    logical, or integer)
--   Data frames: are multiple vectors of the same length, each vector
-    can contain a different data type.
-
-## Subsetting
-
--   Subsetting: extracts values from a vector or larger objects
-    -   Brackets indicate the values to be subset
-    -   Logical vectors determine the values to be selected
-    -   Conditional operators: select values based on criterion provided
-        -   or (`|`), and (`&`)
-        -   less than (`<`, `<=`), greater than (`>`, `>=`), equal to
-            (`==`)
-
-## Data
-
--   The most common object you'll see are data frames, which are a
-    collection of vectors of the same length.
--   Missing data: missing data can cause issues with some functions but
-    can be easily circumvented using the argument `na.rm = TRUE`, making
-    a logical vector with `is.na()` or `!is.na()`, or using the
-    functions `na.omit()` or `complete.cases()`
--   Data sets are available in R for you to use, simply choose one from
-    a list `data()`
-
-## Tidyverse
-
--   It is common to use tools and packages available in the Tidyverse
-    collection for data analysis and visualization.
--   `Ggplot2`: this package is for data visualization. It requires a
-    ggplot for the base plot which contains the data, then layers can be
-    added to generate a personalized plot.
--   Factors are critical for generating the correct plot (`levels()`)
--   `Dplyr`: is helpful for data frame manipulation.
-    -   `%>%` is used as a pipe, which sends the result from one process
-        to the next. Results from data manipulation can be sent directly
-        to make a ggplot and layers can be added from there.
-    -   `select()` selects columns
-    -   `filter()` filters rows based on conditions provided
--   Save
-    -   Save your script in a `.R` plain text file to save your code
-    -   Save your data in CSV format using `write.csv()`
-    -   `ggsave` save your images to any type of file
