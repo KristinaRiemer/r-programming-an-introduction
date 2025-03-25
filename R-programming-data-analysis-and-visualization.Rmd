@@ -37,7 +37,8 @@ knitr::opts_chunk$set(echo = TRUE)
     Cuoto, & Lusseau
 
 
-![Understanding the Iris Dataset](./flowers.png)
+![Understanding the Penguins Dataset](./penguins.png)
+Artwork by [Allison Horst](https://allisonhorst.com/)
 
 ## Starting with Data
 
@@ -45,34 +46,45 @@ This is what the data will look like:
 
 ```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
 tabl <- "
-| Column            | Description                                   |
-|-------------------|:----------------------------------------------|
-| Sepal.Length	    | Sepal length in centimeters                   |            
-| Sepal.Width	      | Sepal width in centimeters                    |
-| Petal.Length	    | Petal length in centimeters                   |
-| Petal.Width	      | Petal width in centimeters                    |
-| Species	          | Name of species name                          |
+| **Column**        | **Description**                                 |
+|-------------------|-------------------------------------------------|
+| species           | Name of species                                 |
+| island            | Island where species was recorded               |
+| bill_length_mm    | Measured length of individual penguin's bill    |
+| bill_depth_mm     | Measured depth of individual penguin's bill     |
+| flipper_length_mm | Measured length of individual penguin's flipper |
+| body_mass_g       | Measured mass of individual penguin             |
+| sex               | Penguin's sex                                   |
+| year              | Year that penguin was measured                  |
 "
 cat(tabl)
 ```
 
+```{r, eval=FALSE}
+# Install R package
+install.packages("palmerpenguins")
+```
+
 ```{r}
+# Read in palmerpenguins
+library(palmerpenguins)
+
 # To see data sets available
-data()
+data(package = "palmerpenguins")
 
 # Load the data set of choice
 # use the data set name as the argument to `data()`
-data(iris)
+data(penguins)
 ```
 
 Open the dataset in RStudio’s Data Viewer
 
 ```{r eval=FALSE}
 # Check the data type of the data just loaded
-class(iris)
+class(penguins)
 
 # View the whole data set
-View(iris)
+View(penguins)
 ```
 
 
@@ -81,31 +93,46 @@ Inspect the data
 
 ```{r eval=FALSE}
 # See a few rows of the data
-head(iris)
-tail(iris)
+head(penguins)
+tail(penguins)
 
 # See a specific number of rows of the data
-head(iris, n = 10)
-tail(iris, n = 10)
+head(penguins, n = 10)
+tail(penguins, n = 10)
 ```
 
 -   Size:
-    -   `dim(iris)` - returns a vector with the number of rows in the
+    -   `dim(penguins)` - returns a vector with the number of rows in the
         first element, and the number of columns as the second element
         (the dimensions of the object)
-    -   `nrow(iris)` - returns the number of rows
-    -   `ncol(iris)` - returns the number of columns
+    -   `nrow(penguins)` - returns the number of rows
+    -   `ncol(penguins)` - returns the number of columns
 -   Content:
-    -   `head(iris)` - shows the first 6 rows
-    -   `tail(iris)` - shows the last 6 rows
+    -   `head(penguins)` - shows the first 6 rows
+    -   `tail(penguins)` - shows the last 6 rows
 -   Names:
-    -   `names(iris)` - returns the column names (synonym of colnames()
+    -   `names(penguins)` - returns the column names (synonym of colnames()
         for data.frame objects)
-    -   `rownames(iris)` - returns the row names
+    -   `rownames(penguins)` - returns the row names
 -   Summary:
-    -   `str(iris)` - structure of the object and information about the
+    -   `str(penguins)` - structure of the object and information about the
         class, length and content of each column
-    -   `summary(iris)` - summary statistics for each column
+    -   `summary(penguins)` - summary statistics for each column
+
+
+#### [Exercises]{.underline}
+1. How many rows and columns are there in this dataframe? 
+2. What is the variable name of the third to last column
+3. How many islands were the penguins measured on, and what are their names? 
+4. Which columns have missing data? 
+
+```{r results='hide'}
+nrow(penguins)
+ncol(penguins)
+colnames(penguins)
+str(penguins) # see island column
+summary(penguins) # bill length, bill depth, flipper length, body mass, sex
+```
 
 ### Indexing and subsetting data frames
 
@@ -115,63 +142,63 @@ followed by column numbers.
 
 ```{r eval=FALSE}
 # dim() gives the output of the rows and columns of the object
-dim(iris)
+dim(penguins)
 
 # Extract specific values by specifying row and column indices
 # in the format: 
 # data_frame[row_index, column_index]
 
-# Extract the first row and first column from iris
-iris[1, 1]
+# Extract the first row and first column from penguins
+penguins[1, 1]
 
 # Extract the first row and sixth column
-iris[1, 6]   
+penguins[1, 6]   
 
 # To select all columns, leave the column index blank
 # Extract the first row and all columns 
-iris[1, ]
+penguins[1, ]
 
 # Extract all rows and the first column
-iris[, 1]
+penguins[, 1]
 
 # An even shorter way to select first column across all rows:
-iris[1] # No comma! 
+penguins[1] # No comma! 
 
 # Select multiple rows or columns with vectors
 # Extract the first three rows of the 1st and 2nd columns
-iris[c(1, 2, 3), c(1, 2)] 
+penguins[c(1, 2, 3), c(1, 2)] 
 
 # We can use the : operator to create a range and select all listed vectors
-iris[1:3, 1:2] 
+penguins[1:3, 1:2] 
 
-# This is equivalent to head(iris)
-iris[1:6, ]
+# This is equivalent to head(penguins)
+penguins[1:6, ]
 
 # Subsetting with single square brackets ("[]") always returns a data frame.
 # If you want a vector, use double square brackets ("[[]]")
 
 # For instance, to get a column as a vector:
-iris[[1]]
-iris[["Species"]]
+penguins[[1]]
+penguins[["species"]]
 
 # To get the first value in our data frame:
-iris[[1, 1]]
-iris[1, "Species"]
+penguins[[1, 1]]
+penguins[1, "species"]
 
 # Data frames can be subset by calling their column names directly
 # Use the $ operator with column names to return a vector
-iris$Species
+penguins$species
 
 ```
 
 ```{r eval=FALSE}
 # Exceptions: subsetting the whole data frame, except the first 
 # and second columns
-iris[, -c(1, 2)]                
+penguins[, -c(1, 2)]                
 
 # Exceptions: subsetting all columns of the data frame 
 # except for the first six rows
-iris[-(7:nrow(iris)), ] 
+penguins[-(7:nrow(penguins)), ] 
 ```
 
 
@@ -198,6 +225,8 @@ Every ggplot2 plot has three key components:
     observation. Layers are usually created with a geom function. It is
     important to note that layers are added with a `+`.
 
+Demonstrate this one step at a time
+
 ```{r, fig.width =5, fig.height = 3, fig.align='center'}
 # Install the following library
 # install.packages("ggplot2")
@@ -205,66 +234,79 @@ Every ggplot2 plot has three key components:
 # Load the ggplot2 package to access its unique functions 
 library(ggplot2)
 
+# Step 0: Specify dataset to plot with `ggplot` function
+ggplot(data = penguins)
 
-# Step 1: Make the plot object by indicating the input data 
-# and plot aesthetics
-# Example of creating the plot object for a scatter plot
-plot_1 <- ggplot(data = iris, 
-                 aes(x = Sepal.Length, 
-                     y = Sepal.Width)) 
 
-# Step 2: Add layers to the plot object to plot the data. Here we add 
-# the points of the scatter plot
-# Example of a basic scatter plot adding a `geom_point()` layer
-plot_1 + 
+# Step 1: Specify variables for each axis
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) 
+
+# Step 2: Add geom to specify type of plot with `+`
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
   geom_point()
 
-# Find out the options for `geom_point()`
-?geom_point
+# Check out help page for `ggplot()`
+?ggplot
 
-# Step 3: Modify each layer using specific arguments and aesthetics options
-# Example of a colorful scatter plot adding aesthetic mappings to the 
-# `geom_point()` layer 
-plot_1 + 
-  geom_point(aes(color = Species, 
-                 shape = Species))
+```
+
+
+#### [Exercises]{.underline}
+
+1. Create a distribution of flipper length using `geom_density()`
+
+```{r results='hide'}
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+  geom_density()
+```
+
+
+Modifying plots
+
+```{r}
+# Plot points and colors by categorical variable
+# Legend shows up automatically
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, shape = species))
+
+# How to know what can be modified? See Aesthetics section
+?geom_point
 ```
 
 
 
 ```{r, fig.width = 5, fig.height = 3, fig.align='center'}
 
-# Add labels using `labs()`
-plot_1 + 
-  geom_point(aes(color = Species, 
-                 shape = Species)) +
-  labs(x = "Sepal Length",
-       y = "Sepal Width",
-       title = "Sepal Length and Width")
+# Add labels using `labs()` and `+`
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, shape = species)) + 
+  labs(x = "Bill Length", y = "Bill Depth", title = "Bill Length and Depth")
 ```
 
 ```{r, fig.width = 5, fig.height = 3, fig.align='center'}
 # Boxplot
-plot_2 <- ggplot(data = iris, 
-                 aes(x = Species, 
-                     y = Petal.Width)) 
-
-# Basic boxplot adding a `geom_boxplot()` layer
-# Important note: the x value must be factored or grouped to have individual 
-# boxplots returned
-plot_2 +
+ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
   geom_boxplot()
-  
-# Colorful boxplot adding more layers and aesthetic mappings to the data
-plot_2 + 
-  geom_boxplot(aes(color = Species)) +
-  geom_jitter(aes(x = Species), 
-              position = position_jitter(width = 0.05)) + 
-  labs(y = "Petal Width") +
-  theme_bw()
 ```
 
 
+#### [Exercises]{.underline}
+Modify the box plot
+
+1. Color the boxplot by species
+2. Change x and y axis labels to look nicer
+3. Simplify the theme using `theme_bw` (and check out the help page for more options)
+4. Bonus: Plot the points and spread them out with `geom_jitter`
+
+```{r results='hide'}
+
+ggplot(data = penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot(aes(color = species)) +
+  labs(x = "Species", y = "Body Mass") +
+  theme_bw() +
+  geom_jitter(position = position_jitter(width = 0.05))
+
+```
 
 R comes with default colors and so does ggplot2. These are nice enough
 but sometimes it is nice to customize our plots. There are few ways we
@@ -296,14 +338,7 @@ can do this.
 # Creating the base plot. Here we have indicated the data set and its 
 # mappings.We have also added which column should be used for color 
 # and fill mappings.
-plot_3 <- ggplot(data = iris, 
-                 aes(x = Petal.Length, 
-                     y = Petal.Width,
-                     color = Species,
-                     fill = Species)) 
-
-# Basic boxplot adding a `geom_boxplot()` layer
-plot_3 +
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species)) +
   geom_point()
   
 ```
@@ -316,16 +351,15 @@ plot_3 +
 library(RColorBrewer) 
 
 # RColorBrewer Example 1
-plot_3 + 
-  geom_point(size = 2) +
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species)) +
+  geom_point() +
   scale_color_brewer(palette = "PuOr")
 
 
 # Using Your Own Colors, Example 2
-plot_3 +
-  geom_point(size = 2) +
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species)) +
+  geom_point() +
   scale_color_manual(values = c("orange", "red", "skyblue")) 
-
 
 ```
 
@@ -370,58 +404,43 @@ levels(sample)
 nlevels(sample)
 ```
 
+### Converting Factors
+
 When working with data in a data frame, the columns that contain text
 are not automatically coerced (= converted) into the factor data type,
 but once we have loaded the data we can do the conversion using the
 factor() function
 
 ```{r eval=FALSE}
-head(iris)
-iris$Species <- factor(iris$Species)
-head(iris)
+head(penguins)
+penguins$species <- as.character(penguins$species)
+levels(penguins$species)
 
-summary(iris$Species)
-levels(iris$Species)
-nlevels(iris$Species)
+penguins$species <- factor(penguins$species)
+head(penguins)
+levels(penguins$species)
 ```
-
-
-### Converting Factors
-
-Sometimes it is necessary to convert data from one type to another
-
-```{r eval=FALSE}
-sample <- factor(sample, 
-                 levels = c("wild type", "experimental"))
-
-as.character(sample)
-sample_char <- as.character(sample)
-sample_char
-
-as.numeric(sample)
-```
-
 
 ### Renaming Factors
 
 ```{r eval=FALSE}
 # Inspect the contents of the column 
-levels(iris$Species)
+levels(penguins$species)
 
 # Replace level names with a new vector of names
-levels(iris$Species) <- c("Setosa", "Versicolor", "Virginica")
-ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species, shape = Species)) + 
-  geom_point() + 
-  labs(x = "Sepal Length", y = "Sepal Width", title = "Sepal Length & Width") + 
-  #scale_color_brewer(palette = "PuOr")
-  scale_color_manual(values = c("orange", "red", "blue"))
+levels(penguins$species) <- c("P. adeliae", "P. antarcticus", "P. papua")
+head(penguins)
 
-# Check names of factors have been replaced within data frame
-levels(iris$Species)
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species)) +
+  geom_point()
+
+#Reorder new names
+penguins$species <- factor(penguins$species, levels = c("P. papua",  "P. adeliae", "P. antarcticus"))
+
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species, fill = species)) +
+  geom_point()
 
 ```
-
-
 
 # Manipulating, analyzing and exporting data with tidyverse
 
@@ -450,7 +469,7 @@ dplyr functions
 ### Selecting columns and filtering rows
 
 -   `select()` subset columns
-    -   The first argument is the data frame (iris), and the subsequent
+    -   The first argument is the data frame (penguins), and the subsequent
         arguments are the columns to keep.
 -   `filter()` subset rows on conditions
 
@@ -462,13 +481,12 @@ dplyr functions
 library(tidyverse)
 
 # Reloading data to ensure nothing has been manipulated
-data(iris)
+data(penguins)
 ```
 
 ```{r, eval=FALSE}
 # Select specific columns
-select(iris, 
-       Species, Petal.Length, Petal.Width)
+select(penguins, species, bill_length_mm, bill_depth_mm)
 ```
 
 
@@ -477,14 +495,13 @@ Select all columns except certain ones by using a “-” in front of the
 variable to exclude it
 
 ```{r eval=FALSE}
-select(iris, 
-       -Sepal.Length, -Sepal.Width)
+select(penguins, -bill_length_mm, -bill_depth_mm)
 ```
 
 Choose rows based on specific criterion with `filter()`
 
 ```{r eval=FALSE}
-filter(iris, Species == "virginica")
+filter(penguins, species == "Gentoo")
 ```
 
 ### Pipes
@@ -501,55 +518,45 @@ PC or `Cmd` + `Shift` + `M` if you have a Mac.
 
 ```{r eval=FALSE}
 # Filter rows and save as an object
-small <- filter(iris, 
-                Petal.Length < 5)
+small <- filter(penguins, body_mass_g < 3000)
+small
 
 # Select columns and save as another object
-small_x <- select(small,
-                  Species, Petal.Length, Petal.Width)
-small_x
+small_year_only <- select(small, year)
+small_year_only
 
 # Combine the two operations in one piece of code using pipes
-iris %>%
-  filter(Petal.Length < 5) %>%
-  select(Species, Petal.Length, Petal.Width)
+penguins %>%
+  filter(body_mass_g < 3000) %>%
+  select(island)
 ```
 
 Create a plot using the subset data
 
 ```{r fig.width=5, fig.height = 3, fig.align = 'center'}
 # Create a new object with the subset data
-iris_petals <- iris %>%
-  filter(Petal.Length < 5) %>%
-  select(Species, Petal.Length, Petal.Width)
+small_islands <- penguins %>%
+  filter(body_mass_g < 3000) %>%
+  select(island)
 
 # Use new data to create a plot object
-petal_plot <- ggplot(iris_petals, 
-                 aes(x = Petal.Length,
-                     y = Petal.Width))
-
-# Add layers to plot object
-petal_plot +
-  geom_point(aes(shape = Species,
-                 color = Species)) +
-  labs(title = "Iris Small Petal Lengths")
+ggplot(small_islands, aes(x = island)) +
+  geom_histogram(stat = "count") +
+  labs(title = "Counts of small penguins on islands")
   
 ```
 
 Write the subset data and plot in one piece of code
 
 ```{r fig.width=5, fig.height = 3, fig.align = 'center'}
-iris %>%
-  filter(Petal.Length < 5) %>%
-  select(Species, Petal.Length, Petal.Width) %>%
-  ggplot(aes(x = Petal.Length,
-             y = Petal.Width)) +
-  geom_point(aes(shape = Species,
-                 color = Species)) +
-  labs(title = "Iris Small Petal Lengths")
+penguins %>%
+  filter(body_mass_g < 3000) %>%
+  select(island) %>%
+  ggplot(aes(x = island)) +
+  geom_histogram(stat = "count") +
+  labs(title = "Counts of small penguins on islands")
+  
 ```
-
-
 
 ### Mutate
 
@@ -557,19 +564,18 @@ Create new columns based on the values in existing columns using
 `mutate()`
 
 ```{r eval=FALSE}
-iris %>%
-  mutate(petal_ratio = Petal.Width / Petal.Length,
-         petal_percent = petal_ratio * 100) 
+penguins %>%
+  mutate(bill_ratio = bill_depth_mm / bill_length_mm,
+         bill_percent = bill_ratio * 100) 
 ```
 
 Add a plot in one piece of code
 
 ```{r, eval=TRUE, fig.width = 5, fig.height = 3, fig.align='center'}
-iris %>%
-  mutate(petal_ratio = Petal.Width / Petal.Length,
-         petal_percent = petal_ratio * 100) %>%
-  ggplot(aes(x = Species,
-             y = petal_ratio)) +
+penguins %>%
+  mutate(bill_ratio = bill_depth_mm / bill_length_mm,
+         bill_percent = bill_ratio * 100)  %>%
+  ggplot(aes(x = species, y = bill_ratio)) +
   geom_boxplot()
 ```
 
@@ -587,9 +593,9 @@ Key functions of dplyr for this workflow are `group_by()` and
 which collapses each group into a single-row summary of that group.
 
 ```{r eval=FALSE}
-iris %>%
-  group_by(Species) %>%
-  summarize(petal_width_mean = mean(Petal.Width, na.rm = TRUE))
+penguins %>%
+  group_by(species) %>%
+  summarize(bill_length_mean = mean(bill_length_mm)) #need to add na.rm = TRUE
 ```
 
 Once the data are grouped, you can also summarize multiple variables at
@@ -597,11 +603,11 @@ the same time. Add a column indicating the minimum and maximum width for
 each species.
 
 ```{r eval=FALSE}
-iris %>%
-  filter(!is.na(Petal.Width)) %>%
-  group_by(Species) %>%
-  summarize(petal_width_mean = mean(Petal.Width),
-            petal_width_min = min(Petal.Width))
+penguins %>%
+  filter(!is.na(bill_length_mm)) %>%
+  group_by(species) %>%
+  summarize(bill_length_mean = mean(bill_length_mm), 
+            bill_depth_mean = mean(bill_depth_mm))
 ```
 
 ### Exporting plots
@@ -610,9 +616,9 @@ iris %>%
 plot by adjusting the appropriate arguments (width, height, and dpi)
 
 ```{r eval=FALSE}
-my_plot <- ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) + 
+my_plot <- ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
   geom_point()
 
-ggsave("path/name_of_file.png", my_plot, width = 15, height = 10)
+ggsave("penguin_bills.png", my_plot, width = 8, height = 5)
 
 ```
