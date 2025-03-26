@@ -442,6 +442,18 @@ ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = speci
 
 ```
 
+### Exporting plots
+
+`ggsave()` allows you easily change the dimension and resolution of your
+plot by adjusting the appropriate arguments (width, height, and dpi)
+
+```{r eval=FALSE}
+my_plot <- ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point()
+
+ggsave("penguin_bills.png", my_plot, width = 8, height = 5)
+```
+
 # Manipulating, analyzing and exporting data with tidyverse
 
 ## Data manipulation using dplyr and tidyr
@@ -522,8 +534,8 @@ small <- filter(penguins, body_mass_g < 3000)
 small
 
 # Select columns and save as another object
-small_year_only <- select(small, year)
-small_year_only
+small_island_only <- select(small, island)
+small_island_only
 
 # Combine the two operations in one piece of code using pipes
 penguins %>%
@@ -610,15 +622,4 @@ penguins %>%
             bill_depth_mean = mean(bill_depth_mm))
 ```
 
-### Exporting plots
 
-`ggsave()` allows you easily change the dimension and resolution of your
-plot by adjusting the appropriate arguments (width, height, and dpi)
-
-```{r eval=FALSE}
-my_plot <- ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point()
-
-ggsave("penguin_bills.png", my_plot, width = 8, height = 5)
-
-```
